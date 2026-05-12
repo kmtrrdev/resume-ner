@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - API_KEY=${API_KEY}
+      - MODEL_DIR=/app/models
+    volumes:
+      - ./backend/models:/app/models
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "8501:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - API_KEY=${API_KEY}
+    depends_on:
+      - backend
+    restart: unless-stopped

@@ -1,0 +1,30 @@
+{
+  "version": "v7-LoRA",
+  "base_model": "dslim/bert-base-NER",
+  "lora": {
+    "r": 32,
+    "alpha": 64,
+    "modules": [
+      "query",
+      "key",
+      "value",
+      "dense"
+    ]
+  },
+  "split": {
+    "val_ratio": 0.15,
+    "test_ratio": 0.15,
+    "val_size": 33,
+    "test_size": 33
+  },
+  "best_val_f1": 0.8324,
+  "best_skills_f1": 0.7273,
+  "test_f1": 0.8368,
+  "improvements_over_v6": [
+    "Val/Test 15% each (was 10%)",
+    "Synthetic data teaches header-only designation",
+    "Post-processing: designation picker, degree header filter + GPA filter",
+    "Composite early stopping: 70% F1 + 30% Skills F1",
+    "Companies: filter usernames, emails, urls"
+  ]
+}
